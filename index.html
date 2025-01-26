@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Sales - Delivery Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .header {
+            background-color: #ff0000;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 24px;
+        }
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+        .delivery-form {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 500px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .delivery-form h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .delivery-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        .delivery-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .delivery-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .delivery-form button:hover {
+            background-color: #cc0000;
+        }
+        .map-container {
+            margin-top: 20px;
+            height: 400px;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        AUTO SALES - Delivery Service
+    </div>
+    <div class="main-content">
+        <div class="delivery-form">
+            <h2>Enter Your Delivery Details</h2>
+            <label for="address">Delivery Address:</label>
+            <input type="text" id="address" placeholder="Enter your address">
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" placeholder="Enter your phone number">
+            <button onclick="confirmDelivery()">Confirm Delivery</button>
+        </div>
+        <div class="map-container" id="map"></div>
+    </div>
+
+    <script>
+        let map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 40.1792, lng: 44.4991 }, // Yerevan coordinates
+                zoom: 12,
+            });
+
+            const marker = new google.maps.Marker({
+                position: { lat: 40.1792, lng: 44.4991 },
+                map: map,
+                draggable: true,
+                title: "Drag me!",
+            });
+
+            marker.addListener('dragend', function(event) {
+                const lat = event.latLng.lat();
+                const lng = event.latLng.lng();
+                document.getElementById('address').value = `Lat: ${lat}, Lng: ${lng}`;
+            });
+        }
+
+        function confirmDelivery() {
+            const address = document.getElementById("address").value;
+            const phone = document.getElementById("phone").value;
+            if (address && phone) {
+                alert(`Delivery confirmed! \nAddress: ${address} \nPhone: ${phone}`);
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+</body>
+</html>
